@@ -1,0 +1,35 @@
+{
+  "name": "adamspay-dami-deleon",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "hbs": "~4.0.4",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.15"
+  },
+  "description": "Implementar AdamsPAY para conseguir un puesto laboral",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/damideleon/adamspay-dami_deleon.git"
+  },
+  "keywords": [
+    "AdamsPay",
+    "NodeJs",
+    "API/Rest",
+    "Cobros"
+  ],
+  "author": "dami_deleon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/damideleon/adamspay-dami_deleon/issues"
+  },
+  "homepage": "https://github.com/damideleon/adamspay-dami_deleon#readme"
+}
