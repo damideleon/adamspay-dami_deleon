@@ -8,8 +8,8 @@ const port = process.env.PORT || 5000;
 var exphbs  = require('express-handlebars');
 
 //motor de plantillas
-app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
+app.set("views", "./views")
+app.set('view engine', 'hbs');
 
 //servir archivos de la carpeta public
 app.use(express.static(path.join(__dirname, 'public')))
