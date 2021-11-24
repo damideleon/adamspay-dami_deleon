@@ -8,6 +8,14 @@ const pool = new Pool({
 
 module.exports = {
     query: (text, params, callback) => {
-      return pool.query(text, params, callback)
+      //return pool.query(text, params, callback)
+      try {
+        const client = await pool.connect();
+        return pool.query(text, params, callback);
+      } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+      }
     },
+     
   }
