@@ -1,14 +1,9 @@
-const path = require('path')
-const PORT = process.env.PORT || 5000
-
-
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
-var exphbs  = require('express-handlebars');
 
 //motor de plantillas
-app.set("views", "./views")
+app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs');
 
 //servir archivos de la carpeta public
