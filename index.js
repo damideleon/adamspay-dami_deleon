@@ -1,17 +1,43 @@
-const cool = require('cool-ascii-faces')
-const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 
-const { Pool } = require('pg');
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 5000;
+var exphbs  = require('express-handlebars');
+
+//motor de plantillas
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+
+//servir archivos de la carpeta public
+app.use(express.static(path.join(__dirname, 'public')))
+
+//middlewares para lectura de peticiones
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+//pages
+const index   = require("./routes/home")
+const cliente = require("./routes/client")
+const admin   = require("./routes/admin")
+const tienda  = require("./routes/tienda")
 
 
+//conectores de rutas
+app.use("/", index)
+app.use("/cliente", cliente)
+app.use("/admin", admin)
+app.use("/tienda", tienda)
+
+
+//inicializar server
+app.listen(port, () => console.log(`Listening on ${ port }`))
+
+
+
+/*
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
@@ -30,4 +56,4 @@ express()
       res.send("Error " + err);
     }
   })
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))*/
