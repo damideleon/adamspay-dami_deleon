@@ -26,20 +26,20 @@ router.get('/', async (req, res) => {
 }).get("/new", (req, res, next) => {
 
     deuda = {
-        "docId": req.body.idDeuda,
+        "docId": req.query.idDeuda,
         "amount": 
             {
                 "currency": "PYG",
-                "value": req.body.monto
+                "value": req.query.monto
             },
-        "label": req.body.label,
+        "label": req.query.label,
         "validPeriod": {
             "start": moment().utc().format("Y-m-d[T]H:M:S"),
             "end": moment().add(2, "days").utc().format("Y-m-d[T]H:M:S")
         }
     }
     axios({
-        method: 'post',
+        method: 'POST',
         baseURL: host,
         url: path,
         headers : 
