@@ -4,12 +4,6 @@ var router = express.Router();
 var axios = require("axios")
 var moment = require("moment")
 
-var s = moment().utc().format("Y-m-d[T]H:M:S")
-var e = moment().add(2, "days").utc().format("Y-m-d[T]H:M:S")
-
-console.log("Hoy: "+ s + " hasta: "+ e)
-
-
 var db = require("../db")
 
 
@@ -34,8 +28,8 @@ router.get('/', async (req, res) => {
             },
         "label": req.query.label,
         "validPeriod": {
-            "start": moment().utc().format("Y-m-d[T]H:M:S"),
-            "end": moment().add(2, "days").utc().format("Y-m-d[T]H:M:S")
+            "start": moment().utc().format("Y-m-d[T]HH:MM:SS"),
+            "end": moment().add(2, "days").utc().format("Y-m-d[T]HH:MM:SS")
         }
     }
 
