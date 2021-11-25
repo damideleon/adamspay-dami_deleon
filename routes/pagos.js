@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
 
     deuda =
     {
-        "docId": idDeuda,
+        "docId": req.body.idDeuda,
         "amount": 
             {
                 "currency": "PYG",
