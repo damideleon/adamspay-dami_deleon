@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
     db.query("SELECT * from test_table", [], (err, rs) => {
         res.json({ cool: true });
     });
-}).get("/new", (req, res, next) => {
+}).get("/new", async (req, res, next) => {
 
     deuda = {
         "docId": req.query.idDeuda,
@@ -38,28 +38,34 @@ router.get('/', async (req, res) => {
             "end": moment().add(2, "days").utc().format("Y-m-d[T]H:M:S")
         }
     }
-    axios({
-        method: 'POST',
-        baseURL: host,
-        url: path,
-        headers : 
-            {
-                "apikey": apiKey,
-                "Content-Type": "application/json",
-                "x-if-exists": siExiste
-            },
-        data: {
-            debt: deuda
-        }
-    })
-    .then((response)=>{
-        if(!("debt" in response)){
-            res.redirect(response.debt)
-        } else {
-            console.error(response.meta)
-            res.json(response.meta)
-        }
-    });
+
+    try {
+        axios({
+            method: 'POST',
+            baseURL: host,
+            url: path,
+            headers : 
+                {
+                    "apikey": apiKey,
+                    "Content-Type": "application/json",
+                    "x-if-exists": siExiste
+                },
+            data: {
+                debt: deuda
+            }
+        })
+        .then((response)=>{
+            if(!("debt" in response)){
+                res.redirect(response.debt)
+            } else {
+                console.error(response.meta)
+                res.json(response.meta)
+            }
+        });
+    } catch(e) {
+        console.error(e)
+    }
+    
 });
 
 
