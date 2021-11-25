@@ -18,7 +18,6 @@ router.get('/', async (req, res) => {
     });
 })
 .post("/", (req, res, next) => {
-
     deuda = {
         "docId": req.query.idDeuda,
         "amount": 
@@ -48,7 +47,8 @@ router.get('/', async (req, res) => {
             }
         })
         .then((response)=>{
-            if(!("debt" in response)){
+			var urlPago = response.debt || ""
+            if(urlPago != ""){
                 res.redirect(response.debt)
             } else {
                 console.error(response.meta)
@@ -57,10 +57,7 @@ router.get('/', async (req, res) => {
         });
     } catch(e) {
         console.error(e)
-
     }
     
 });
-
-
 module.exports = router;
