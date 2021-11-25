@@ -16,7 +16,8 @@ router.get('/', async (req, res) => {
     db.query("SELECT * from test_table", [], (err, rs) => {
         res.json(rs.rows);
     });
-}).get("/new", async (req, res, next) => {
+})
+.post("/", (req, res, next) => {
 
     deuda = {
         "docId": req.query.idDeuda,
@@ -37,11 +38,10 @@ router.get('/', async (req, res) => {
             method: 'POST',
             baseURL: host,
             url: path,
-            headers : 
-                {
-                    "apikey": apiKey,
-                    "Content-Type": "application/json",
-                    "x-if-exists": siExiste
+            headers : {
+				"apikey": apiKey,
+				"Content-Type": "application/json",
+				"x-if-exists": siExiste
                 },
             data: {
                 debt: deuda
@@ -57,6 +57,7 @@ router.get('/', async (req, res) => {
         });
     } catch(e) {
         console.error(e)
+
     }
     
 });
