@@ -60,7 +60,7 @@ router.get('/', async (req, res) => {
             res.redirect(response.debt)
         } else {
             console.error(response.meta)
-            res.sendStatus(500)
+            res.json(response.meta)
         }
     });
 });
