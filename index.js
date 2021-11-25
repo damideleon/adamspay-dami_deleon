@@ -20,7 +20,7 @@ app.use("/", index)
 app.use("/cliente", cliente)
 app.use("/admin", admin)
 app.use("/tienda", tienda)
-app.use("/pagos", )
+app.use("/pagos", pagos)
 
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
