@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
             }
         })
         .then((response)=>{
-			var urlPago = response.debt || ""
+			var urlPago = response.debt.payUrl || ""
             if(urlPago != ""){
                 res.redirect(response.debt)
             } else {
