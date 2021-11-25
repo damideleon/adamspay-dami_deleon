@@ -13,9 +13,8 @@ const host = "staging.adamspay.com"
 const path = "/api/v1/debts"
 
 router.get('/', async (req, res) => {
-
     db.query("SELECT * from test_table", [], (err, rs) => {
-        res.json({ cool: true });
+        res.json(rs.rows);
     });
 }).get("/new", async (req, res, next) => {
 
