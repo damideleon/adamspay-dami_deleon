@@ -23,10 +23,9 @@ router.get('/', async (req, res) => {
     db.query("SELECT * from test_table", [], (err, rs) => {
         res.json({ cool: true });
     });
-}).post("/", (req, res, next) => {
+}).get("/new", (req, res, next) => {
 
-    deuda =
-    {
+    deuda = {
         "docId": req.body.idDeuda,
         "amount": 
             {
@@ -39,8 +38,6 @@ router.get('/', async (req, res) => {
             "end": moment().add(2, "days").utc().format("Y-m-d[T]H:M:S")
         }
     }
-
-
     axios({
         method: 'post',
         baseURL: host,
