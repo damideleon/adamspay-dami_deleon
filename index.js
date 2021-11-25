@@ -12,6 +12,7 @@ const index   = require("./routes/home")
 const cliente = require("./routes/client")
 const admin   = require("./routes/admin")
 const tienda  = require("./routes/tienda")
+const pagos = require("./routes/pagos")
 
 
 //conectores de rutas
@@ -19,6 +20,7 @@ app.use("/", index)
 app.use("/cliente", cliente)
 app.use("/admin", admin)
 app.use("/tienda", tienda)
+app.use("/pagos", )
 
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
