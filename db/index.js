@@ -14,7 +14,6 @@ module.exports = {
         return pool.query(text, params, callback);
       } catch (err) {
         console.error(err);
-        res.send("Error " + err);
       }
     },
      

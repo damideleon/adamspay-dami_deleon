@@ -12,7 +12,7 @@ const index   = require("./routes/home")
 const cliente = require("./routes/client")
 const admin   = require("./routes/admin")
 const tienda  = require("./routes/tienda")
-const pagos = require("./routes/pagos")
+const pagos	  = require("./routes/pagos")
 
 
 //conectores de rutas
