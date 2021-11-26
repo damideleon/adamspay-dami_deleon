@@ -11,15 +11,9 @@ const apiSecret = "0e5810e847bb12580b";
 var db = require("../db")
 
 router.post("/", (req, res, next)=>{
-	console.log(req)
+	console.log(req.headers.HTTP_X_ADAMS_NOTIFY_HASH)
 
-	db.query("insert into test_table (id, name) values ((select max(id) + 1 from test_table), $1::varchar)",
-	[req], function(err, result){
-		if(err){
-			res.sendStatus(201)
-		}
-		res.sendStatus(200)
-	})
+	
 	/*var notify = req;
 
 	switch (notify.type){
