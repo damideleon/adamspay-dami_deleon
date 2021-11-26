@@ -11,7 +11,7 @@ const apiSecret = "0e5810e847bb12580b";
 var db = require("../db")
 
 router.post("/", (req, res, next)=>{
-	console.log(req.headers.HTTP_X_ADAMS_NOTIFY_HASH)
+	console.log(req.headers)
 
 	
 	/*var notify = req;
