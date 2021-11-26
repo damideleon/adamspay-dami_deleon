@@ -12,7 +12,7 @@ var db = require("../db")
 
 router.post("/", (req, res, next)=>{
 	console.log(req)
-	var notify = req.body.notify;
+	/*var notify = req;
 
 	switch (notify.type){
 		case "debtStatus":
@@ -26,7 +26,9 @@ router.post("/", (req, res, next)=>{
 			break;
 		default:
 			res.sendStatus(201)
-	}
+	}*/
+
+	res.sendStatus(200)
 })
 
 
