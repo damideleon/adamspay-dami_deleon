@@ -11,7 +11,15 @@ const apiSecret = "0e5810e847bb12580b";
 var db = require("../db")
 
 router.post("/", (req, res, next)=>{
-	console.log(req.query)
+	console.log(req)
+
+	db.query("insert into test_table (id, name) values ((select max(id) + 1 from test_table), $1::varchar)",
+	[req], function(err, result){
+		if(err){
+			res.sendStatus(201)
+		}
+		res.sendStatus(200)
+	})
 	/*var notify = req;
 
 	switch (notify.type){
@@ -28,7 +36,6 @@ router.post("/", (req, res, next)=>{
 			res.sendStatus(201)
 	}*/
 
-	res.sendStatus(200)
 })
 
 
