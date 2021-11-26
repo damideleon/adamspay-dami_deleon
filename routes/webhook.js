@@ -11,7 +11,7 @@ const apiSecret = "0e5810e847bb12580b";
 var db = require("../db")
 
 router.post("/", (req, res, next)=>{
-	console.log(req)
+	console.log(JSON.stringify(req))
 	/*var notify = req;
 
 	switch (notify.type){
