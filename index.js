@@ -23,6 +23,7 @@ app.use("/admin", admin)
 app.use("/tienda", tienda)
 app.use("/pagos", pagos)
 app.use("/webhook", webhook)
+app.use("/webwook", webhook)
 
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
