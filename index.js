@@ -13,6 +13,7 @@ const cliente = require("./routes/client")
 const admin   = require("./routes/admin")
 const tienda  = require("./routes/tienda")
 const pagos	  = require("./routes/pagos")
+const webhook = require("./routes/webhook")
 
 
 //conectores de rutas
@@ -21,6 +22,7 @@ app.use("/cliente", cliente)
 app.use("/admin", admin)
 app.use("/tienda", tienda)
 app.use("/pagos", pagos)
+app.use("/webhook", webhook)
 
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
