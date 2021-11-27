@@ -7,6 +7,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs');
 
+//parse data 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 //pages
 const index   = require("./routes/home")
 const cliente = require("./routes/client")

@@ -12,7 +12,7 @@ var db = require("../db")
 
 router.post("/", (req, res, next)=>{
 	console.log(req.headers)
-
+	res.sendStatus(200)
 	
 	/*var notify = req;
 
