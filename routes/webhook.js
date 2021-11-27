@@ -25,15 +25,32 @@ router.post("/", (req, res, next)=>{
 	}
 
 	
-	/*var notify = req;
+	var notify = req.body.notify.type;
 
-	switch (req.headers['x-adams-notify-type']){
+	switch (notify){
 		case "debtStatus":
-			
+			db.query(
+				"update venta set venta_cobro_estado=$1, venta_estado=$4, venta_cobro=$3 where venta_id = $2 returning venta_id;"
+				[
+					req.body.debt.payStatus.status, //estado del pago
+					req.body.debt.docId, // identificador
+					req.body.debt.amount.paid, //monto pagado
+					req.body.debt.objStatus.status // estado de la deuda
+				], (err, rs)=>{
+					if(err){
+						console.error(err.message)
+						res.sendStatus(201)
+					}else{
+						if(rs.rows.length > 0){
+							res.sendStatus(200)
+						}
+					}
+				}
+			);
 			break;
 		default:
 			res.sendStatus(201)
-	}*/
+	}
 
 })
 

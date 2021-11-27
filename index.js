@@ -7,7 +7,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs');
 
-//parse data 
+//parse body 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -27,7 +27,7 @@ app.use("/admin", admin)
 app.use("/tienda", tienda)
 app.use("/pagos", pagos)
 app.use("/webhook", webhook)
-app.use("/webwook", webhook)
+//app.use("/webwook", webhook) //cuando escribi mal XD
 
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
