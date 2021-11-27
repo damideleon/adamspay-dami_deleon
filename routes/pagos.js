@@ -17,7 +17,29 @@ router.get('/', async (req, res) => {
         res.json(rs.rows);
     });
 })
+//Registar una venta
 .post("/", async (req, res, next) => {
+    //todo insert cabecera
+    db.query("insert into venta(venta_id, cliente_id, venta_precio_total, venta_fecha_hora, venta_cobro, venta_estado, venta_cobro_estado, venta_cobrada_fecha_hora)" +
+    "values "+
+    "((select max(coalesce(venta_id, 0))+1 from venta) "+
+    "$1, $2, current_timestamp, 0, 'active', 'pending', current_timestamp) returning venta_id",
+    [
+        req.body.cliente_id,
+        req.body.venta_precio_total
+    ],
+    (err, rs)=>{
+        if(err){
+            console.log(err.message)
+            res.json({error: true, message: "No se pudo insertar la cabecera"})
+        }
+    });
+
+    //todo insert detalle
+    db.query("", [], (err, rs)=>{
+
+    });
+
     deuda = {
         "docId": req.query.idDeuda,
         "amount": 
