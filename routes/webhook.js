@@ -10,21 +10,21 @@ const apiSecret = "0e5810e847bb12580b";
 
 var db = require("../db")
 
-router.post("/", (req, res, next)=>{
-	console.log(req.headers)
-	res.sendStatus(200)
+router.post("/", (req, res, next)=>{	
+	HMAC_esperado = md5("adams" + req.body + apiSecret);
+	HMAC_recibido = req.headers['x-adams-notify-hash'];
+	if(HMAC_esperado == HMAC_recibido){
+		console.log("OK hash")
+	} else {
+		es.sendStatus('No ok Hash: ' + HMAC_esperado +' >><< ' + HMAC_recibido )
+	}
+
 	
 	/*var notify = req;
 
-	switch (notify.type){
+	switch (req.headers['x-adams-notify-type']){
 		case "debtStatus":
-			HMAC_esperado = md5("adams" + req.body + apiSecret);
-			HMAC_recibido = req.headers.HTTP_X_ADAMS_NOTIFY_HASH;
-			if(HMAC_esperado == HMAC_recibido){
-				res.sendStatus(200)
-			} else {
-				res.sendStatus(201)
-			}
+			
 			break;
 		default:
 			res.sendStatus(201)
