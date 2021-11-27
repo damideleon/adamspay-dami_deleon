@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const pgp = require('pg-promise')
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -16,5 +17,14 @@ module.exports = {
         console.error(err);
       }
     },
+    Inserts: (template, data) => {
+      if (!(this instanceof Inserts)) {
+          return new Inserts(template, data);
+      }
+      this._rawDBType = true;
+      this.formatDBType = function () {
+          return data.map(d=>'(' + pgp.as.format(template, d) + ')').join(',');
+      };
+  }
      
   }
