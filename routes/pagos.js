@@ -13,7 +13,7 @@ const host = "https://staging.adamspay.com"
 const path = "/api/v1/debts"
 
 router.get('/', async (req, res) => {
-    db.query("SELECT * from test_table", [], (err, rs) => {
+    db.query("SELECT * from pagos", [], (err, rs) => {
         res.json(rs.rows);
     });
 })
@@ -43,6 +43,8 @@ router.get('/', async (req, res) => {
     db.query("insert into ctrl_venta(venta_id, producto_cod, cantidad) values $1 ", 
     db.Inserts('${venta_id}, ${producto_cod}, ${cantidad}', req.body.detalle),
     (err, rs)=>{
+        if(err)
+            res.json({error:true, message: "no se pudo insertar los detalles"})
         deuda = {
             "docId": vRS.rows[0].venta_id,
             "amount": 
