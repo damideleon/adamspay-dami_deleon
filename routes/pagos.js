@@ -28,55 +28,61 @@ router.get('/', async (req, res) => {
         req.body.cliente_id,
         req.body.venta_precio_total
     ],
-    (err, rs)=>{
+    (err, vRS)=>{
         if(err){
             console.log(err.message)
             res.json({error: true, message: "No se pudo insertar la cabecera"})
         }
     });
 
-    //todo insert detalle
-    db.query("", [], (err, rs)=>{
+    for (let i = 0; i < req.body.detalle.length; i++) {
+        req.body.detalle[i].venta_id = vRS.rows[0].venta_id;
+    }
 
+    //todo insert detalle
+    db.query("insert into ctrl_venta(venta_id, producto_cod, cantidad) values $1 ", 
+    db.Inserts('${venta_id}, ${producto_cod}, ${cantidad}', req.body.detalle),
+    (err, rs)=>{
+        deuda = {
+            "docId": vRS.rows[0].venta_id,
+            "amount": 
+                {
+                    "currency": "PYG",
+                    "value": req.body.venta_precio_total
+                },
+            "label": "Pedido: " + req.body.venta_id,
+            "validPeriod": {
+                "start": moment().utc().format(),
+                "end": moment().add(2, "days").utc().format()
+            }
+        }
+        try {
+            axios({
+                method: 'POST',
+                baseURL: host,
+                url: path,
+                headers : {
+                    "apikey": apiKey,
+                    "Content-Type": "application/json",
+                    "x-if-exists": siExiste},
+                data: {"debt" : deuda}
+            })
+            .then((response)=>{
+                console.log(response.data)
+                var urlPago = response.data.debt.payUrl || ""
+                if(urlPago != ""){
+                    res.redirect(urlPago)
+                } else {
+                    //console.error(response.meta)
+                    //res.json(response.meta)
+                    res.sendStatus(201)
+                }
+            });
+        } catch(e) {
+            console.error(e)
+        }
     });
 
-    deuda = {
-        "docId": req.query.idDeuda,
-        "amount": 
-            {
-                "currency": "PYG",
-                "value": req.query.value
-            },
-        "label": req.query.label,
-        "validPeriod": {
-            "start": moment().utc().format(),
-            "end": moment().add(2, "days").utc().format()
-        }
-    }
-    try {
-        axios({
-            method: 'POST',
-            baseURL: host,
-            url: path,
-            headers : {
-				"apikey": apiKey,
-				"Content-Type": "application/json",
-				"x-if-exists": siExiste},
-            data: {"debt" : deuda}
-        })
-        .then((response)=>{
-			console.log(response.data)
-			var urlPago = response.data.debt.payUrl || ""
-            if(urlPago != ""){
-                res.redirect(urlPago)
-            } else {
-                //console.error(response.meta)
-                //res.json(response.meta)
-                res.sendStatus(201)
-            }
-        });
-    } catch(e) {
-        console.error(e)
-    }
+    
 });
 module.exports = router;
