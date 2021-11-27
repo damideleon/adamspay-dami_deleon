@@ -49,7 +49,8 @@ router.get('/', async (req, res) => {
                 res.redirect(urlPago)
             } else {
                 //console.error(response.meta)
-                res.json(response.meta)
+                //res.json(response.meta)
+                res.sendStatus(201)
             }
         });
     } catch(e) {
