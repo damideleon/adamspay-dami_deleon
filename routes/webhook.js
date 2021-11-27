@@ -16,7 +16,7 @@ router.post("/", (req, res, next)=>{
 	if(HMAC_esperado == HMAC_recibido){
 		console.log("OK hash")
 	} else {
-		es.sendStatus('No ok Hash: ' + HMAC_esperado +' >><< ' + HMAC_recibido )
+		console.log('No ok Hash: ' + HMAC_esperado +' >><< ' + HMAC_recibido )
 	}
 
 	
