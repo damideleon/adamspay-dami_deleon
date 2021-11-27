@@ -6,7 +6,7 @@ var md5 = require("md5");
 //var axios = require("axios")
 //var moment = require("moment")
 
-const apiSecret = "0e5810e847bb12580b";
+const apiSecret = "adams-14331675fbc0b2";
 
 var db = require("../db")
 
@@ -14,7 +14,7 @@ router.post("/", (req, res, next)=>{
 	
 	console.log(req.body)
 
-	HMAC_esperado = md5("adams" + req + apiSecret);
+	HMAC_esperado = md5("adams" + req.body + apiSecret);
 	HMAC_recibido = req.headers['x-adams-notify-hash'];
 	if(HMAC_esperado == HMAC_recibido){
 		console.log("OK hash")
