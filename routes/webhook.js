@@ -12,7 +12,7 @@ var db = require("../db")
 
 router.post("/", (req, res, next)=>{
 	
-	console.log(req)
+	console.log(req.body)
 
 	HMAC_esperado = md5("adams" + req + apiSecret);
 	HMAC_recibido = req.headers['x-adams-notify-hash'];
