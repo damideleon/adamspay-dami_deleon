@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
 
                 const queryDetalle = 'insert into ctrl_productos(venta_id, producto_id, cantidad) VALUES ($1, $2, $3);'
 
-                var detalle = JSON.parse(req.body.detalle);
+                var detalle = req.body.detalle;
 
                 for (let i = 0; i < detalle.length; i++) {
                     client.query(queryDetalle, [res.rows[0].venta_id, detalle[i].producto_id, detalle[i].cantidad])
