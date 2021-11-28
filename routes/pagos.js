@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
                 await client.query('COMMIT') //comit en la bd
                 //crear deuda en ADAMSPAY
                 deuda = {
-                    "docId": vRS.rows[0].venta_id,
+                    "docId": res.rows[0].venta_id,
                     "amount":
                     {
                         "currency": "PYG",
