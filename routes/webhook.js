@@ -6,7 +6,7 @@ var md5 = require("md5");
 //var axios = require("axios")
 //var moment = require("moment")
 
-const apiSecret = "adams-14331675fbc0b2";
+const apiSecret = "0e5810e847bb12580b";
 
 var db = require("../db")
 
