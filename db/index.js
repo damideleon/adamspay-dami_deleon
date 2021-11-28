@@ -1,5 +1,4 @@
 const { Pool } = require('pg');
-const pgp = require('pg-promise')
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -8,23 +7,40 @@ const pool = new Pool({
 });
 
 module.exports = {
-    query: async (text, params, callback) => {
-      //return pool.query(text, params, callback)
-      try {
-        const client = await pool.connect();
-        return pool.query(text, params, callback);
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    Inserts: (template, data) => {
-      if (!(this instanceof Inserts)) {
-          return new Inserts(template, data);
-      }
-      this._rawDBType = true;
-      this.formatDBType = function () {
-          return data.map(d=>'(' + pgp.as.format(template, d) + ')').join(',');
-      };
+  client: await pool.connect(),
+  query: async (text, params, callback) => {
+    //return pool.query(text, params, callback)
+    try {
+      return pool.query(text, params, callback);
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  shouldAbort : (err) => {
+    if (err) {
+      console.error('Error in transaction', err.stack)
+      pool.query('ROLLBACK', err => {
+        if (err) {
+          console.error('Error rolling back client', err.stack)
+        }
+        // release the client back to the pool
+        done()
+      })
+  }},
+  prepareStatement: (SQLinsert, rows) => {
+    const params = []
+    const chunks = []
+    rows.forEach(row => {
+      const valueClause = []
+      row.forEach(p => {
+        params.push(p)
+        valueClause.push('$' + params.length)
+      })
+      chunks.push('(' + valueClause.join(', ') + ')')
+    })
+    return {
+      statement: SQLinsert + chunks.join(', '),
+      params: params
+    }
   }
-     
-  }
+}
