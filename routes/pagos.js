@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
                 var detalle = JSON.parse(req.body.detalle);
 
                 for (let i = 0; i < detalle.length; i++) {
-                    client.query(queryDetalle, [result.rows[0].venta_id, detalle[i].producto_id, detalle[i].cantidad])
+                    await client.query(queryDetalle, [result.rows[0].venta_id, detalle[i].producto_id, detalle[i].cantidad])
                 }
                 await client.query('COMMIT') //comit en la bd
                 //crear deuda en ADAMSPAY
