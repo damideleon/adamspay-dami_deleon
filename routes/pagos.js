@@ -18,10 +18,8 @@ router.get('/', async (req, res) => {
     });
 }).post("/", async (req, res, next) => {
 
-    console.log( typeof req.body.detalle)
-    console.log(JSON.parse(req.body.detalle))
-    res.sendStatus(200)
-    /*
+   
+   
     const { Pool } = require('pg')
     const pool = new Pool({
         connectionString: process.env.DATABASE_URL,
@@ -43,8 +41,10 @@ router.get('/', async (req, res) => {
 
                 const queryDetalle = 'insert into ctrl_productos(venta_id, producto_id, cantidad) VALUES ($1, $2, $3);'
 
-                for (let i = 0; i < req.body.detalle.length; i++) {
-                    client.query(queryDetalle, [res.rows[0].venta_id, req.body.detalle[i].producto_cod, req.body.detalle[i].cantidad])
+                var detalle = JSON.parse(req.body.detalle)
+
+                for (let i = 0; i < detalle.length; i++) {
+                    client.query(queryDetalle, [res.rows[0].venta_id, detalle[i].producto_cod, detalle[i].cantidad])
                 }
                 await client.query('COMMIT') //comit en la bd
                 //crear deuda en ADAMSPAY
@@ -95,6 +95,6 @@ router.get('/', async (req, res) => {
             }
         })().catch(e =>{
             console.error(e.message)
-        })*/
+        })
 });
 module.exports = router;
