@@ -14,11 +14,11 @@ router.post("/", (req, res, next) => {
 
 	//console.log(req.body)
 
-	HMAC_esperado = md5("adams" + JSON.stringify(req.body) + apiSecret);
+	HMAC_esperado = md5("adams" + req.rawBody + apiSecret);
 	HMAC_recibido = req.headers['x-adams-notify-hash'];
 	if (HMAC_esperado == HMAC_recibido) {
 		console.log("OK hash")
-		res.sendStatus(200)
+		//gires.sendStatus(200)
 		var notify = req.body.notify.type;
 
 		switch (notify) {
