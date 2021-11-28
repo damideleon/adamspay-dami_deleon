@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 }).post("/", async (req, res, next) => {
 
     console.log( typeof req.body.detalle)
-    console.log(typeof req.body.detalle)
+    console.log(JSON.parse(req.body.detalle))
     res.sendStatus(200)
     /*
     const { Pool } = require('pg')
