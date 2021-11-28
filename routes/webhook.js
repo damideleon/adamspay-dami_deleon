@@ -29,9 +29,9 @@ router.post("/", (req, res, next) => {
 					"venta_id = $4 returning venta_id;",
 					[
 						req.body.debt.payStatus.status, //estado del pago
-						req.body.debt.docId, // identificador
+						req.body.debt.objStatus.status, // estado de la deuda
 						req.body.debt.amount.paid, //monto pagado
-						req.body.debt.objStatus.status // estado de la deuda
+						req.body.debt.docId // identificador
 					], (err, rs) => {
 						if (err) {
 							console.error(err.message)
