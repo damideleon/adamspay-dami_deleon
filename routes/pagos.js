@@ -17,9 +17,12 @@ router.get('/', async (req, res) => {
         res.json(rs.rows);
     });
 }).post("/", async (req, res, next) => {
+    var detalle = JSON.parse(req.body.detalle);
+    console.log(typeof detalle)
+    console.log(detalle[0])
 
-   
-   
+    res.sendStatus(200)
+   /*
     const { Pool } = require('pg')
     const pool = new Pool({
         connectionString: process.env.DATABASE_URL,
@@ -41,7 +44,7 @@ router.get('/', async (req, res) => {
 
                 const queryDetalle = 'insert into ctrl_productos(venta_id, producto_id, cantidad) VALUES ($1, $2, $3);'
 
-                var detalle = JSON.parse(req.body.detalle)
+                var detalle = JSON.parse(req.body.detalle);
 
                 for (let i = 0; i < detalle.length; i++) {
                     client.query(queryDetalle, [res.rows[0].venta_id, detalle[i].producto_cod, detalle[i].cantidad])
@@ -95,6 +98,6 @@ router.get('/', async (req, res) => {
             }
         })().catch(e =>{
             console.error(e.message)
-        })
+        })*/
 });
 module.exports = router;
