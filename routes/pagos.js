@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
         //todo insert cabecera
         db.query('BEGIN', err => {
             if (err) {
-                db.query('ROLLBACK')
+                db.query('ROLLBACK', db.shouldAbort(err))
                 res.json({ error: true, message: "No se pudo insertar la cabecera" })
             }
             
@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
             (err, vRS) => {
                 if (err) {
                     console.log(err.message)
-                    db.query('ROLLBACK')
+                    db.query('ROLLBACK', db.shouldAbort(err))
                     res.json({ error: true, message: "No se pudo insertar la cabecera" })
                 }
 
@@ -50,6 +50,7 @@ router.get('/', async (req, res) => {
                 db.query(db.prepareStatement("insert into ctrl_venta(venta_id, producto_cod, cantidad) VALUES ", req.body.detalle),
                 (err, rs) => {
                 if (err){
+                    db.query('ROLLBACK', db.shouldAbort(err))
                 res.json({
                         error: true,
                         message: "no se pudo insertar los detalles"
@@ -107,15 +108,5 @@ router.get('/', async (req, res) => {
             });
 
         })
-        
-
-        for (let i = 0; i < req.body.detalle.length; i++) {
-            req.body.detalle[i].venta_id = vRS.rows[0].venta_id;
-        }
-
-        //todo insert detalle
-        
-
-
     });
 module.exports = router;

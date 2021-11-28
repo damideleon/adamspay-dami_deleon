@@ -7,7 +7,6 @@ const pool = new Pool({
 });
 
 module.exports = {
-  client: await pool.connect(),
   query: async (text, params, callback) => {
     //return pool.query(text, params, callback)
     try {
@@ -23,8 +22,6 @@ module.exports = {
         if (err) {
           console.error('Error rolling back client', err.stack)
         }
-        // release the client back to the pool
-        done()
       })
   }},
   prepareStatement: (SQLinsert, rows) => {
