@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
 
                 const res = await client.query(queryVenta, [req.body.cliente_id, req.body.venta_precio_total])
 
-                const queryDetalle = 'insert into ctrl_venta(venta_id, producto_cod, cantidad) VALUES ($1, $2, $3);'
+                const queryDetalle = 'insert into ctrl_productos(venta_id, producto_cod, cantidad) VALUES ($1, $2, $3);'
 
                 for (let i = 0; i < req.body.detalle.length; i++) {
                     client.query(queryDetalle, [res.rows[0].venta_id, req.body.detalle[i].producto_cod, req.body.detalle[i].cantidad])
@@ -83,10 +83,13 @@ router.get('/', async (req, res) => {
 
             } catch (e) {
                 await client.query('ROLLBACK')
+                res.json({error: true, message: e.message})
                 throw e
             } finally {
                 client.release()
             }
-        })().catch(e => console.error(e.stack))
+        })().catch(e =>{
+            console.error(e.message)
+        })
 });
 module.exports = router;
