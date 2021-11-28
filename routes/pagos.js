@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
                 for (let i = 0; i < detalle.length; i++) {
                     await client.query(queryDetalle, [result.rows[0].venta_id, detalle[i].producto_id, detalle[i].cantidad])
                 }
-                await client.query('COMMIT') //comit en la bd
+                
                 //crear deuda en ADAMSPAY
                 deuda = {
                     "docId": result.rows[0].venta_id,
@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
                         "currency": "PYG",
                         "value": req.body.venta_precio_total
                     },
-                    "label": "Pedido: " + req.body.venta_id,
+                    "label": "Pedido: " + result.rows[0].venta_id,
                     "validPeriod": {
                         "start": moment().utc().format(),
                         "end": moment().add(2, "days").utc().format()
@@ -73,7 +73,7 @@ router.get('/', async (req, res) => {
                     //console.log(response.data)
                     var urlPago = axiosResponse.data.debt.payUrl || ""
                     if (urlPago != "") {
-                        res.redirect(urlPago)
+                        res.json({message: "deuda creada", urlPago})
                     } else {
                         res.sendStatus(201)
                     }
@@ -81,6 +81,8 @@ router.get('/', async (req, res) => {
                     console.log(error);
                     res.sendStatus(201)
                   });
+
+                await client.query('COMMIT') //comit en la bd
             } catch (e) {
                 await client.query('ROLLBACK')
                 res.json({error: true, message: e.message})
