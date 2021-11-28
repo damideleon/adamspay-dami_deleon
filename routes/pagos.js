@@ -17,6 +17,11 @@ router.get('/', async (req, res) => {
         res.json(rs.rows);
     });
 }).post("/", async (req, res, next) => {
+
+    console.log( typeof req.body.detalle)
+    console.log(typeof req.body.detalle)
+    res.sendStatus(200)
+    /*
     const { Pool } = require('pg')
     const pool = new Pool({
         connectionString: process.env.DATABASE_URL,
@@ -90,6 +95,6 @@ router.get('/', async (req, res) => {
             }
         })().catch(e =>{
             console.error(e.message)
-        })
+        })*/
 });
 module.exports = router;
