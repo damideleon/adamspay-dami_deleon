@@ -4,31 +4,12 @@ var router = express.Router();
 var axios = require("axios")
 var moment = require("moment")
 
-var db = require("../db")
 
 
 const siExiste = "update"
 const apiKey = "adams-14331675fbc0b2"
 const host = "https://staging.adamspay.com"
 const path = "/api/v1/debts"
-
-
-//POOL para ROLLBACK
-pool.connect((err, client, done) => {
-    const shouldAbort = err => {
-        if (err) {
-            console.error('Error in transaction', err.stack)
-            client.query('ROLLBACK', err => {
-                if (err) {
-                    console.error('Error rolling back client', err.stack)
-                }
-                // release the client back to the pool
-                done()
-            })
-        }
-        return !!err
-    }
-})
 
 
 router.get('/', async (req, res) => {
