@@ -22,11 +22,11 @@ router.post("/", (req, res, next) => {
 		var notify = req.body.notify.type;
 		switch (notify) {
 			case "debtStatus":
-				console.log(req.body)
+				//console.log(req.body)
 				db.query(
 					"update venta set venta_cobro_estado = $1, " +
 					"venta_estado = $2, venta_cobro=$3 where " +
-					"venta_id = $4 returning venta_id;"
+					"venta_id = $4 returning venta_id;",
 					[
 						req.body.debt.payStatus.status, //estado del pago
 						req.body.debt.docId, // identificador
