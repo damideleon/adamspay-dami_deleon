@@ -59,7 +59,7 @@ router.get('/', async (req, res) => {
                     }
                 }
                 //crear deuda en AdamsPay
-                axios({
+                await axios({
                     method: 'POST',
                     baseURL: host,
                     url: path,
@@ -69,20 +69,18 @@ router.get('/', async (req, res) => {
                         "x-if-exists": siExiste
                     },
                     data: { "debt": deuda }
-                })
-                .then((axiosResponse) => {
+                }).then((axiosResponse) => {
                     //console.log(response.data)
                     var urlPago = axiosResponse.data.debt.payUrl || ""
                     if (urlPago != "") {
                         res.redirect(urlPago)
                     } else {
-                        //console.error(response.meta)
-                        //res.json(response.meta)
                         res.sendStatus(201)
                     }
-                });
-
-
+                }).catch(function (error) {
+                    console.log(error);
+                    res.sendStatus(201)
+                  });
             } catch (e) {
                 await client.query('ROLLBACK')
                 res.json({error: true, message: e.message})
