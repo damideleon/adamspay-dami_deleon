@@ -17,8 +17,6 @@ router.get('/', async (req, res) => {
         res.json(rs.rows);
     });
 }).post("/", async (req, res, next) => {
-
-  
     const { Pool } = require('pg')
     const pool = new Pool({
         connectionString: process.env.DATABASE_URL,
@@ -36,19 +34,19 @@ router.get('/', async (req, res) => {
                     "((select coalesce(max(venta_id), 0) + 1 from venta), " +
                     "$1, $2, current_timestamp, 0, 'active', 'pending', current_timestamp) returning venta_id";
 
-                const res = await client.query(queryVenta, [req.body.cliente_id, req.body.venta_precio_total])
+                const result = await client.query(queryVenta, [req.body.cliente_id, req.body.venta_precio_total])
 
                 const queryDetalle = 'insert into ctrl_productos(venta_id, producto_id, cantidad) VALUES ($1, $2, $3);'
 
                 var detalle = JSON.parse(req.body.detalle);
 
                 for (let i = 0; i < detalle.length; i++) {
-                    client.query(queryDetalle, [res.rows[0].venta_id, detalle[i].producto_id, detalle[i].cantidad])
+                    client.query(queryDetalle, [result.rows[0].venta_id, detalle[i].producto_id, detalle[i].cantidad])
                 }
                 await client.query('COMMIT') //comit en la bd
                 //crear deuda en ADAMSPAY
                 deuda = {
-                    "docId": res.rows[0].venta_id,
+                    "docId": result.rows[0].venta_id,
                     "amount":
                     {
                         "currency": "PYG",
@@ -72,9 +70,9 @@ router.get('/', async (req, res) => {
                     },
                     data: { "debt": deuda }
                 })
-                .then((response) => {
+                .then((axiosResponse) => {
                     //console.log(response.data)
-                    var urlPago = response.data.debt.payUrl || ""
+                    var urlPago = axiosResponse.data.debt.payUrl || ""
                     if (urlPago != "") {
                         res.redirect(urlPago)
                     } else {
