@@ -14,7 +14,7 @@ router.post("/", (req, res, next) => {
 
 	//console.log(req.body)
 
-	HMAC_esperado = md5("adams" + req.body + apiSecret);
+	HMAC_esperado = md5("adams" + JSON.stringify(req.body) + apiSecret);
 	HMAC_recibido = req.headers['x-adams-notify-hash'];
 	if (HMAC_esperado == HMAC_recibido) {
 		console.log("OK hash")
@@ -50,6 +50,7 @@ router.post("/", (req, res, next) => {
 
 	} else {
 		console.log('No ok Hash: ' + HMAC_esperado + ' >><< ' + HMAC_recibido)
+		console.log(req.body)
 		res.sendStatus(200)
 	}
 
