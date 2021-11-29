@@ -1,14 +1,13 @@
-{{#each data}}
-  <div class="container">
-    <div id="mainProductos">
-      <div class="w3-row w3-grayscale">
-        <div class="w3-container">
-          <img src="{{product_img}}" style="width:100%">
-          <p>{{producto_descripcion}}<br><b>{{producto_precio}}</b></p>
-        </div>
-      </div>
-    </div>
-    <div id="asideCarrito">
+<div class="card-group">
+  {{#each data}}
+  <div class="card">
+    <img src="{{product_img}}" class="card-img-top" alt="{{producto_descripcion}}">
+    <div class="card-body">
+      <h5 class="card-title">{{producto_descripcion}}</h5>
+      <p class="card-text"><b>{{producto_precio}}</b></p>
+      <a role="button" class="btn btn-primary stretched-link">Agregar al carrito</a>
     </div>
   </div>
-{{/each}}
+  {{/each}}
+</div>
+
