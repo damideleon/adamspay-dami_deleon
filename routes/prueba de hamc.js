@@ -57,8 +57,7 @@ var body = {
 }
 const apiSecret = "0e5810e847bb12580b";
 const apiKey = "adams-14331675fbc0b2"
-var esperado = "293e846140212b5068aca809eb17d0bc"
-var recibido = "128153ef02c28efb37ec5e3c536a8867"
+
 
 //api secret
 console.log("API SECRET \n" + md5("adams" + body + apiSecret))
