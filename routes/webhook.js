@@ -11,14 +11,11 @@ const apiSecret = "0e5810e847bb12580b";
 var db = require("../db")
 
 router.post("/", (req, res, next) => {
-
-	//console.log(req.body)
-
+	//COMPROBAR HASH
 	HMAC_esperado = md5("adams" + req.rawBody + apiSecret);
 	HMAC_recibido = req.headers['x-adams-notify-hash'];
 	if (HMAC_esperado == HMAC_recibido) {
 		console.log("OK hash")
-		//gires.sendStatus(200)
 		var notify = req.body.notify.type;
 		switch (notify) {
 			case "debtStatus":
@@ -47,16 +44,9 @@ router.post("/", (req, res, next) => {
 			default:
 				res.sendStatus(201)
 		}
-
 	} else {
-		console.log('No ok Hash: ' + HMAC_esperado + ' >><< ' + HMAC_recibido)
-		console.log(req.body)
-		res.sendStatus(200)
+		res.sendStatus(201)
 	}
-
-
-
-
 })
 
 
