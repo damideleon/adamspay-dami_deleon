@@ -5,7 +5,7 @@ var db = require("../db")
 
 router.get('/', async (req, res) => {
   db.query("SELECT * from producto", [], (err, rs) => {
-      res.json({data: rs.rows});
+      res.render("tienda", {data: rs.rows});
   });
 })
 .post("/", async (req, res, next) =>{
