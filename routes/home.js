@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 }).get('/home', function(req, res, next) {
   res.render("index", {title: "CUENTAPP"});
 })
-.get('/gratzie', function(req, res, next) {
+.get('/gratzie', async function(req, res, next) {
 
   data = {
     cliente : {},
