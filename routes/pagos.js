@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
                 "(select coalesce(max(venta_id), 0) + 1 from venta), $1, $2, md5($3), "+ 
                 "$4, $5, $6::date, 1) returning cliente_id;"
                 
-                const cliente = client.query(insertCliente, [
+                const cliente = await client.query(insertCliente, [
                     req.body.cliente_nombre,
                     req.body.cliente_user,
                     req.body.cliente_password,
