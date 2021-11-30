@@ -73,7 +73,7 @@ router.get('/', async (req, res) => {
                 const queryDetalle = 'insert into ctrl_productos(venta_id, producto_id, cantidad) VALUES ($1, $2, 1);'
                 await client.query(queryDetalle, [
                         result.rows[0].venta_id,
-                        producto.rows[0].producto_precio
+                        producto.rows[0].producto_id
                     ]
                 )
                 /**
