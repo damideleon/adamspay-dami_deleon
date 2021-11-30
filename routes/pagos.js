@@ -4,7 +4,7 @@ var router = express.Router();
 var axios = require("axios")
 var moment = require("moment")
 
-
+var db = require("../db")
 
 const siExiste = "update"
 const apiKey = "adams-14331675fbc0b2"
