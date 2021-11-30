@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
                 const insertCliente = "INSERT INTO cliente(cliente_id, cliente_nombre, "+
                 "cliente_user, cliente_password, cliente_mail, cliente_celular, " +
                 "cliente_fechanacimiento, user_id) VALUES ( " + 
-                "((select coalesce(max(venta_id), 0) + 1 from venta), $1, $2, md5($3), "+ 
+                "(select coalesce(max(venta_id), 0) + 1 from venta), $1, $2, md5($3), "+ 
                 "$4, $5, $6::date, 1) returning cliente_id;"
                 
                 const cliente = client.query(insertCliente, [
