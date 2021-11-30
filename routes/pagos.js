@@ -16,7 +16,17 @@ router.get('/', async (req, res) => {
     db.query("SELECT * from pagos", [], (err, rs) => {
         res.json(rs.rows);
     });
-}).post("/", async (req, res, next) => {
+})
+.get("/plan-:id", (req, res, next)=>{
+    db.query("select * from producto where producto_id = $1", [
+        req.params.id
+    ], (err, result)=>{
+        if(err)
+            res.sendStatus(500)
+        res.render("tienda/checkout", result.rows[0])
+    })
+})
+.post("/", async (req, res, next) => {
     const { Pool } = require('pg')
     const pool = new Pool({
         connectionString: process.env.DATABASE_URL,
