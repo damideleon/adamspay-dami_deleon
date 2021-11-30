@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
     });
 })
 .get("/plan-:id", (req, res, next)=>{
-    db.query("select * from producto where producto_id = $1", [
+    db.query("select *, TO_CHAR(producto_precio, '999 999') as precio_fmt from producto where producto_id = $1", [
         req.params.id
     ], (err, result)=>{
         if(err)
