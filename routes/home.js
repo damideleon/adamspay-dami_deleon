@@ -16,11 +16,9 @@ router.get('/', function(req, res, next) {
     producto : {}
   }
 
-  console.log(req.query)
-
   db.query("select v.*, cli.cliente_nombre from " +
   "venta v join cliente cli on v.cliente_id = cli.cliente_id " +
-  "where v.venta_id = $1;", [req.body.doc_id], (e, result)=>{
+  "where v.venta_id = $1;", [req.query.doc_id], (e, result)=>{
     if(e){
       console.error(e.message)
     }
@@ -29,7 +27,7 @@ router.get('/', function(req, res, next) {
 
   db.query("SELECT *, (c.cantidad * p.producto_precio) as total " + 
   "from ctrl_productos c JOIN producto p ON c.producto_id = p.producto_id  " +
-  "where c.venta_id = $1;", [req.body.doc_id], (e, result)=>{
+  "where c.venta_id = $1;", [req.query.doc_id], (e, result)=>{
     if(e){
       console.error(e.message)
     }
