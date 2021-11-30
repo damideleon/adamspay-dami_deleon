@@ -15,6 +15,9 @@ router.get('/', function(req, res, next) {
     cliente : {},
     producto : {}
   }
+
+  console.log(req.body)
+
   db.query("select v.*, cli.cliente_nombre from " +
   "venta v join cliente cli on v.cliente_id = cli.cliente_id " +
   "where v.venta_id = $1;", [req.body.doc_id], (e, result)=>{
