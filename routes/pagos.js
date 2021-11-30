@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
         res.render("tienda/checkout", result.rows[0])
     })
 })
-.post("/", async (req, res, next) => {
+.post("/plan-:id", async (req, res, next) => {
     const { Pool } = require('pg')
     const pool = new Pool({
         connectionString: process.env.DATABASE_URL,
@@ -37,22 +37,57 @@ router.get('/', async (req, res) => {
             const client = await pool.connect()
             try {
                 await client.query('BEGIN')
+                const insertCliente = "INSERT INTO cliente(cliente_id, cliente_nombre, "+
+                "cliente_user, cliente_password, cliente_mail, cliente_celular, " +
+                "cliente_fechanacimiento, user_id) VALUES ( " + 
+                "((select coalesce(max(venta_id), 0) + 1 from venta), $1, $2, md5($3), "+ 
+                "$4, $5, $6::date, 1) returning cliente_id;"
+                
+                const cliente = client.query(insertCliente, [
+                    req.body.cliente_nombre,
+                    req.body.cliente_user,
+                    req.body.cliente_password,
+                    req.body.cliente_mail,
+                    req.body.cliente_celular,
+                    req.body.cliente_fechanacimiento
+                ])
+
+                 //Seleccionar producto a facturar    
+                 const producto = await client.query("select * from producto where producto_id = $1", [req.params.id])
+
+                //insertar venta
                 const queryVenta = "insert into venta(venta_id, cliente_id, venta_precio_total, " +
                     "venta_fecha_hora, venta_cobro, venta_estado, venta_cobro_estado, " +
                     "venta_cobrada_fechahora) " +
                     "values " +
                     "((select coalesce(max(venta_id), 0) + 1 from venta), " +
                     "$1, $2, current_timestamp, 0, 'active', 'pending', current_timestamp) returning venta_id";
+                
+               
 
-                const result = await client.query(queryVenta, [req.body.cliente_id, req.body.venta_precio_total])
+                const result = await client.query(queryVenta, [
+                    cliente.rows[0].cliente_id, 
+                    producto.rows[0].producto_precio
+                ])
 
-                const queryDetalle = 'insert into ctrl_productos(venta_id, producto_id, cantidad) VALUES ($1, $2, $3);'
-
-                var detalle = JSON.parse(req.body.detalle);
+                const queryDetalle = 'insert into ctrl_productos(venta_id, producto_id, cantidad) VALUES ($1, $2, 1);'
+                await client.query(queryDetalle, [
+                        result.rows[0].venta_id,
+                        producto.rows[0].producto_precio
+                    ]
+                )
+                /**
+                 * para insert de varios productos
+                 */
+                /*var detalle = JSON.parse(req.body.detalle);
 
                 for (let i = 0; i < detalle.length; i++) {
-                    await client.query(queryDetalle, [result.rows[0].venta_id, detalle[i].producto_id, detalle[i].cantidad])
-                }
+                    await client.query(queryDetalle, [
+                        result.rows[0].venta_id,
+                        detalle[i].producto_id,
+                        detalle[i].cantidad
+                    ])
+                }*/
                 
                 //crear deuda en ADAMSPAY
                 deuda = {
@@ -60,7 +95,7 @@ router.get('/', async (req, res) => {
                     "amount":
                     {
                         "currency": "PYG",
-                        "value": req.body.venta_precio_total
+                        "value": producto.rows[0].producto_precio
                     },
                     "label": "Pedido: " + result.rows[0].venta_id,
                     "validPeriod": {
@@ -83,7 +118,7 @@ router.get('/', async (req, res) => {
                     //console.log(response.data)
                     var urlPago = axiosResponse.data.debt.payUrl || ""
                     if (urlPago != "") {
-                        res.json({message: "deuda creada", urlPago})
+                        res.redirect(urlPago)
                     } else {
                         res.sendStatus(201)
                     }
