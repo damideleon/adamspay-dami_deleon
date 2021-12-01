@@ -11,6 +11,8 @@
     <script src="js/alertify.min.js"></script>
     <script src="js/context.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/routing.js"></script>
+    <script src="js/routing.config.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
     <!-- Default theme -->
@@ -116,30 +118,28 @@
 </head>
 
 <body>
-
-
     <div class="page">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark container-fluid" aria-label="Fourth navbar example">
             <div class="container">
-                <a class="navbar-brand" href="#">AdamsPay by @dami_deleon</a>
+                <a class="navbar-brand" href="/home">AdamsPay by @dami_deleon</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false"
+                    data-bs-target="#menu" aria-controls="menu" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarsExample04">
+                <div class="collapse navbar-collapse" id="menu">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#/home">Home</a>
+                            <a class="nav-link" aria-current="page" href="#/home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#/tienda">Tienda</a>
+                            <a class="nav-link" href="/tienda">Tienda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#/cliente/nuevo">Registrarse</a>
+                            <a class="nav-link" href="/cliente/nuevo">Registrarse</a>
                         </li>
                         <div class="carrito mr-auto pl-3">
-                            <a href="#/carrito" class="nav-link">
+                            <a href="/carrito" class="nav-link">
                                 <i class="bi bi-cart2"></i>
                             </a>
                         </div>
@@ -147,23 +147,8 @@
                 </div>
             </div>
         </nav>
-
-
-
         <div class="main-container">
-                <div id="vista" class="container-fluid">
-                    <main class="p-5 text-light mt-auto">
-                        <h1>Servidor dedicado para sus aplicaciones</h1>
-                        <p class="lead">Limitese a crear, nosotros hacemos el resto</p>
-                        <p class="lead">
-                          <a class="btn btn-lg btn-dark mt-3" href="#/tienda">
-                            Ver planes <i class="bi bi-arrow-right"></i>
-                          </a>
-                        </p>
-                      </main>
-                </div>
-                
-            
+                {{{body}}}
         </div>
     </div>
 

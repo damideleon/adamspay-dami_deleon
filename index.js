@@ -4,7 +4,10 @@ const PORT = process.env.PORT || 5000;
 const path = require("path")
 const bodyParser = require("body-parser")
 
+const Handlebars = require("express-handlebars")
+
 app.use(express.static(path.join(__dirname, 'public')))
+//motor de render
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs');
 
@@ -15,6 +18,8 @@ app.use(bodyParser.json({
     }
   }))
 app.use(express.urlencoded({ extended: false }));
+
+
 
 //pages
 const index   = require("./routes/home")

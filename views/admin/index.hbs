@@ -1,0 +1,27 @@
+<table>
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>Cliente</td>
+            <td>Costo de Venta (G.)</td>
+            <td>Fecha Hora</td>
+            <td>Total cobrado</td>
+            <td>Estado Deuda</td>
+            <td>Estado del Cobro</td>
+            <td>Última Actualización</td>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <td>{{venta_id}}</td>
+        <td>{{cliente_id}}</td>
+        <td>{{venta_precio_total}}</td>
+        <td>{{venta_fecha_hora}}</td>
+        <td>{{venta_cobro}}</td>
+        <td>{{venta_estado}}</td>
+        <td>{{venta_cobro_estado}}</td>
+        <td>{{venta_cobrada_fechahora}}</td>
+        {{/each}}
+    </tbody>
+    
+</table>
