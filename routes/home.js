@@ -5,7 +5,7 @@ const path = require("path");
 const db = require("../db")
 
 router.get('/', function(req, res, next) {
-  res.render("index", {title: "CUENTAPP"});   
+  res.sendFile(path.join(__dirname, '../public/html/admin.html'));   
 }).get('/home', function(req, res, next) {
   res.render("index", {title: "CUENTAPP"});
 })

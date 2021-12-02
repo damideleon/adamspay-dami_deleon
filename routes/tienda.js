@@ -4,9 +4,7 @@ var router = express.Router();
 var db = require("../db")
 
 router.get('/', async (req, res) => {
-  db.query("SELECT * from producto where producto_id > 5", [], (err, rs) => {
-      res.render("tienda", {data: rs.rows});
-  });
+  res.render("tienda");
 })
 .post("/", async (req, res, next) =>{
     db.query("insert into producto(producto_id, producto_description, " +

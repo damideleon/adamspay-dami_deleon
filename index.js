@@ -3,13 +3,33 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const path = require("path")
 const bodyParser = require("body-parser")
+var hbs = require('hbs');
+const genericos = require("./config/handlebars-helpers")
 
-const Handlebars = require("express-handlebars")
+var moment = require('moment')
 
 app.use(express.static(path.join(__dirname, 'public')))
+
 //motor de render
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs');
+
+
+//helpers
+hbs.registerHelper({
+    "hace" : (date) => {
+      moment.locale("es")
+      return moment(date).fromNow(); },
+      "fecha" : (date)=>{
+        moment.locale("es")
+        return moment(date).format("dddd, MMMM D YYYY, h:mm:ss");
+      },
+      "fmt_numero" : (nro)=>{
+        nro = nro.split(".")[0]
+        return genericos.formato_nro(nro)
+      }
+  });
+
 
 //parse body 
 app.use(bodyParser.json({

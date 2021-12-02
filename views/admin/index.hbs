@@ -1,4 +1,5 @@
-<table>
+<div class="container p-3 bg-light my-3 rounded">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <td>#</td>
@@ -12,16 +13,20 @@
         </tr>
     </thead>
     <tbody>
-        {{#each data}}
-        <td>{{venta_id}}</td>
-        <td>{{cliente_id}}</td>
-        <td>{{venta_precio_total}}</td>
-        <td>{{venta_fecha_hora}}</td>
-        <td>{{venta_cobro}}</td>
-        <td>{{venta_estado}}</td>
-        <td>{{venta_cobro_estado}}</td>
-        <td>{{venta_cobrada_fechahora}}</td>
+         {{#each data}}
+            <tr>
+                <td>{{venta_id}}</td>
+                <td>{{cliente_nombre}}</td>
+                <td>{{fmt_numero venta_precio_total}}</td>
+                <td title={{venta_fecha_hora}}>{{fecha venta_fecha_hora}}</td>
+                <td>{{fmt_numero venta_cobro}}</td>
+                <td>{{venta_estado}}</td>
+                <td>{{venta_cobro_estado}}</td>
+                <td title="{{venta_cobrada_fechahora}}">{{hace venta_cobrada_fechahora}}</td>
+            </tr>
         {{/each}}
     </tbody>
     
 </table>
+</div>
+
