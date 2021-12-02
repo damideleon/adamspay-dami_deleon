@@ -22,7 +22,7 @@ hbs.registerHelper({
       return moment(date).fromNow(); },
       "fecha" : (date)=>{
         moment.locale("es")
-        return moment(date).format("dddd, MMMM D YYYY, h:mm:ss");
+        return moment(date).format("dddd, D [de] MMMM YYYY, h:mm:ss");
       },
       "fmt_numero" : (nro)=>{
         nro = nro.split(".")[0]
