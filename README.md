@@ -1,4 +1,4 @@
-# node-js-getting-started
+# AdamsPay Node ExpressJS PostgreSQL
 
 A barebones Node.js app using [Express 4](http://expressjs.com/).
 
